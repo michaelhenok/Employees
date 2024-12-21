@@ -1,0 +1,24 @@
+import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Component({
+  selector: 'app-employee',
+  templateUrl: './employee.component.html',
+  styleUrls: ['./employee.component.css']
+})
+export class EmployeeComponent {
+  top10Employees: any[] = [];
+  highestEarningEmployees: any[] = [];
+
+  constructor(private http: HttpClient) {}
+
+  getTop10Employees(department: string) {
+    this.http.get<any[]>(`/api/employees/top10?depName=${department}`)
+      .subscribe(data => this.top10Employees = data);
+  }
+
+  getHighestEarningEmployees() {
+    this.http.get<any[]>('/api/employees/highest')
+      .subscribe(data => this.highestEarningEmployees = data);
+  }
+}
